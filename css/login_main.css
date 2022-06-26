@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+form,
+.login,
+.registration,
+.error,
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.login,
+.registration,
+.error,
+.dashboard {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+form>* {
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.form-group>* {
+    margin-top: 10px;
+}
+
+.form-group label {
+    margin-right: 10px;
+    flex: 1;
+    min-width: 50px;
+    align-self: center;
+}
+
+.form-group input {
+    flex: 3;
+    padding: 10px;
+}
+
+a {
+    margin: 10px 0;
+}
+
+a:hover {
+    color: #f59932;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.btn-submit {
+    background-color: #f59932;
+    border: none;
+    color: #30347e;
+    margin-top: 15px;
+    padding: 10px;
+
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: #5e65f7;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    color: white;
+    -webkit-box-shadow: 8px 8px 0px 0px #f59932;
+    -moz-box-shadow: 8px 8px 0px 0px #f59932;
+    box-shadow: 8px 8px 0px 0px #f59932;
+}
+
+form {
+    flex: 1;
+}
+
+.dashboard > p, .error > a {
+    margin-top: 30px;
+}
+
+footer p {
+    text-align: center;
+    margin-top: 20px;
+}
