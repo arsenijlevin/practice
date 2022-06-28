@@ -1,12 +1,10 @@
 <?php
 include_once('templates/header.php');
-if ($_SESSION['login'] == "") {
-	header('location:index.php');
-	if (!isset($_POST['login']) or empty($_POST['login'])) {
-	
-		die();
-	}
+include_once('core/utils.php');
+if (!array_key_exists('login', $_SESSION)) {
+	die();
 }
+
 ?>
 
 <div class="dashboard">

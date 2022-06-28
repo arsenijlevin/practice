@@ -1,49 +1,54 @@
 <?php
 session_start();
 include_once('../core/connection.php');
+include_once('../core/utils.php');
 
-if (!isset($_POST['login']) or !isset($_POST['password']) or empty($_POST['login']) or empty($_POST['password'])) {
+if (is_data_null_or_empty($_POST['login']) or is_data_null_or_empty(($_POST['password']))) {
     $_SESSION['error'] = "Введите корректные логин и пароль!";
     header('location:../error_page.php');
-} else {
-    $username = $_POST['login'];
-    $password = $_POST['password'];
-    $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $default_roleid = 3;
-    $name = "";
-    $description  = "";
-    $user = "";
-
-    $stmt3 = $conn->prepare("SELECT login FROM user WHERE login = ?");
-    $stmt3->bind_param('s', $username);
-    $stmt3->execute();
-    $stmt3->bind_result($user);
-    $stmt3->fetch();
-
-    if (isset($user) && !empty($user)) {
-        $_SESSION['error'] = "Пользователь с таким именем уже существует!";
-        header('location:../error_page.php');
-    } else {
-
-        $stmt = $conn->prepare("INSERT INTO user (login, password, roleid) VALUES (?, ?, ?)");
-
-        $stmt->bind_param('ssi', $username, $hashed_password, $default_roleid);
-        $stmt->execute();
-
-        $stmt2 = $conn->prepare("SELECT name, description FROM role WHERE roleid=?");
-        $stmt2->bind_param('i', $default_roleid);
-        $stmt2->execute();
-        $stmt2->bind_result($name, $description);
-        $stmt2->fetch();
-
-        $_SESSION['login'] = $username;
-        $_SESSION['role'] = $name;
-        $_SESSION['description'] = $description;
-
-        $_SESSION['login'] = $username;
-
-        header("location:../dashboard.php");
-
-        $stmt->close();
-    }
+    die();
 }
+
+$username = $_POST['login'];
+$password = $_POST['password'];
+$hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$default_roleid = 3;
+$name = "";
+$description  = "";
+$user = "";
+
+$user_query = $conn->prepare("SELECT login FROM user WHERE login = ?");
+$user_query->bind_param('s', $username);
+$user_query->execute();
+$user_query->bind_result($user);
+$user_query->fetch();
+
+if (!is_data_null_or_empty($user)) {
+    $_SESSION['error'] = "Пользователь с таким именем уже существует!";
+    header('location:../error_page.php');
+    $user_query->close();
+    die();
+}
+
+$register_query = $conn->prepare("INSERT INTO user (login, password, roleid) VALUES (?, ?, ?)");
+
+$register_query->bind_param('ssi', $username, $hashed_password, $default_roleid);
+$register_query->execute();
+
+$role_query = $conn->prepare("SELECT name, description FROM role WHERE roleid=?");
+$role_query->bind_param('i', $default_roleid);
+$role_query->execute();
+$role_query->bind_result($name, $description);
+$role_query->fetch();
+
+$_SESSION['login'] = $username;
+$_SESSION['role'] = $name;
+$_SESSION['description'] = $description;
+
+$_SESSION['login'] = $username;
+
+header("location:../dashboard.php");
+
+$register_query->close();
+$role_query->close();
+$user_query->close();
