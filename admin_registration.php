@@ -18,8 +18,8 @@
 			<input type="password" name="admin_code" class="form-control" required>
 		</div>
 		<input type="submit" class="btn btn-submit" value="Зарегистрироваться">
-
 	</form>
+	<a href="index.php">Вернуться на страницу входа</a>
 </div>
 
 <?php include_once('templates/footer.php'); ?>

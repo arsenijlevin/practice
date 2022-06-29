@@ -1,4 +1,7 @@
-<?php include_once('templates/header.php'); ?>
+<?php 
+include_once('templates/header.php');
+include_once('core/utils.php')
+?>
 
 <div class="login">
 	<h4>Вход:</h4>
@@ -15,6 +18,9 @@
 		<a href="admin_registration.php">Регистрация для администрации</a>
 		<input type="submit" class="btn btn-submit" value="Войти">
 	</form>
+	<?php if (array_key_exists('login', $_SESSION) and !is_data_null_or_empty($_SESSION['login'])) : ?>
+		<a href="dashboard.php">Личный кабинет</a>
+	<?php endif; ?>
 </div>
 
 <?php include_once('templates/footer.php'); ?>
